@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">Inventario de Productos</h2>
+
+<table class="table table-hover align-middle custom-table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio ($)</th>
+            <th>Stock</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td class="fw-bold">{{ product.name }}</td>
+            <td>${{ product.price }}</td>
+            <td>
+                <span class="badge bg-info">{{ product.stock }}</span>
+            </td>
+
+            <td>
+                {% if product.image %}
+                <img src="{{ url_for('static', filename='img/' + product.image) }}"
+                     class="product-img">
+                {% else %}
+                <span class="text-muted">Sin imagen</span>
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="/edit/{{ product.id }}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="/delete/{{ product.id }}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
